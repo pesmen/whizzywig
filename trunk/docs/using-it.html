@@ -1,0 +1,73 @@
+<html><head>
+<title>Using Whizzywig on web pages</title>
+</head><body>
+
+  <h1>Using Whizzywig on web pages</h1>
+<!--================================================================================-->
+
+
+<h3>Simple example - cut and paste</h3>
+<textarea style="border: 1px solid rgb(102, 0, 0);" rows="16" cols="60" onclick="this.select();">&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;whizzywig editor&lt;/title&gt;
+&lt;script type="text/javascript" src="whizzywig.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form&gt;
+&lt;textarea id="edited" style="width:95%; height:300px"&gt; 
+&lt;/textarea&gt;
+&lt;script type="text/javascript"&gt;
+makeWhizzyWig("edited", "all");
+&lt;/script&gt;
+&lt;input type="submit" value="Submit"&gt;&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+
+<p>The above example uses the default graphic buttons - you should upload <a href="../icons.png">icons.png</a> to your root directory, or wherever you will use Whizzywig.<br>
+If you put the toolbar image anywhere but your document root, then you need to tell whizzywig where it is:</p>
+<pre>btn._f="<i>path_to_toolbar_image</i>/WhizzywigToolbar.png";
+makeWhizzywig("<i>textarea_id</i>");</pre>
+<p>&nbsp;</p>
+
+If you want text buttons add a line
+<pre>buttonPath = "textbuttons";</pre> before makeWhizzyWig
+<h2>Explanation...</h2>
+<p>In the <code>HEAD</code> section of your page you need:</p>
+<p>
+<code>&lt;script src="whizzywig.js" type="text/javascript"&gt;&lt;/script&gt;</code>
+</p>
+<p>If you uploaded whizzywig.js to a supporting directory, make sure you give the full path to the script <code>src</code> parameter.</p>
+<p>On supported browsers, Whizzywig will replace <strong>one</strong> textarea you choose
+with a <i>Whizzywig</i> toolbar and edit area. The textarea must have an ID
+attribute. <br>
+</p>
+<p>The editor area takes the size specified for the textarea it replaces. It is better to do this with inline CSS; e.g. (<code>style="width:100%; height:400px"</code>), but it will make a stab at sizing from the <code>rows</code> and <code>cols</code> attributes.  </p>
+
+<p>To start <i>Whizzywig</i> you need to issue a <code>makeWhizzyWig</code> call inside a script tag. The best place to do this is immediately following the textarea:</p>
+
+<p><code>&lt;textarea id="<b>richtext</b>"&gt;Any preset text to be edited goes inside the textarea&lt;/textarea&gt;<br>
+&lt;script type="text/javascript"&gt;<br>
+makeWhizzyWig("<b>richtext</b>", "bold italic link image");<br>
+&lt;/script&gt;</code>
+</p>
+
+<p> The first parameter ("<code>richtext</code>" in the above example) is the ID of your textarea<br>
+The second parameter ("<code>bold italic link</code>"
+in the above example) is the order of buttons on toolbar. Specify
+"all", or leave the parametr off if you want the default set in the
+default order</p>
+
+<p>If you want to use the default graphic buttons rather than text
+buttons, you need to put the WhizzywigToolbar image in your home
+directory:</p>
+<p style="text-align: center;"><img src="../icons.png" alt="This graphic contains all the buttons needed for the whizzywig toolbar"></p> <p>Right click the above image and "Save as" to take a copy of it.</p>
+
+<p>You can specify your own images for buttons and tell Whizzywig where to find them using the <code>buttonPath</code> variable.
+The path must be in quotes and end in a '/', e.g.
+</p><pre>buttonPath = "images/whizzywigbuttons/";</pre>
+Whizzywig will expect these to be .gif files (one per button): if you want another filetype set the <code>buttonExt</code> variable, e.g.
+<pre>buttonExt = ".png";</pre>
+These lines must come <b>before</b> <code>makeWhizzyWig</code>.<br>
+
+</body></html>

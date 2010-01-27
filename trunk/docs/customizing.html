@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>Customize Whizzywig</title>
+</head>
+<body>
+
+<h1>Customize Whizzywig</h1>
+<!--================================================================================-->
+
+
+<p>Use your browser menu to "View Source" on the demo pages to see example configurations.</p>
+
+<h2>Controls on the toolbar</h2>
+
+<p><strong>The toolbar</strong> is configured using the second parameter to makeWhizzywig.<br><code>"all" </code>gives all the controls and is equivalent to specifying: </p>
+
+<blockquote style="margin-right: 0px;" dir="ltr">
+
+<p><code>"formatblock fontname fontsize newline bold italic underline |
+
+left center right | number bullet indent outdent | undo redo | color
+
+hilite rule | link image table | clean html spellcheck fullscreen"</code></p></blockquote>
+
+<p>You can choose any subset of this list, specified in any order to create your own toolbar.<br>Spaces separate each of the entries in the list.</p>
+
+<ul>
+
+<li>"<code>formatblock</code>" creates the pull down for specifiying heading or paragraph style. 
+
+</li><li>"<code>newline</code>" specifies a line break on the toolbar. 
+
+</li><li>"<code>|</code>" specifies a separator between buttons. 
+
+</li><li>"<code>clean</code>" is used to remove font tags and unwanted formatting added after a paste in from Microsoft Word or other office products. 
+
+</li><li>"<code>html</code>" allows the user to edit the HTML source of the text in the edit area.</li></ul>
+
+
+
+<h2>JavaScript variables</h2>
+
+<p><strong>Additional parameters</strong> can optionally be specified in JavaScript. Examples:<br>
+
+<code>buttonPath = "/btn/";</code> //path to toolbar button images; "textbuttons" (the default) means don't use images<br>
+
+<code>cssFile = "stylesheet.css";    </code>//url of CSS stylesheet to attach to edit area<br><code>imageBrowse = "whizzypic.php";</code> //path to page for image browser (see below) <br>
+
+<code>linkBrowse = "picklink.php";  </code> //path to page for link browser (see below)<br> 
+
+<code>gentleClean = false; </code> //turns the cleanup routine vicious: deletes spans, inline styles and classes. Default is 'true'<br> </p>
+
+
+
+<p>Leaving any of these unspecified is harmless. You can add these lines in a script in the <code>head</code> section of your HTML, or just before the <code>makeWhizzywig</code> call.<br>
+
+</p>
+
+
+
+<h2>Image browser, Link browser</h2>
+
+<p>You can use the Javascript variables described above to specify a pop-up browser for images, or for links.<br>
+
+An example of each is provided here - see the <a href="http://unverse.net/wysiwyg-pic.html">demo with link and image browsers</a>.<br>
+
+If you want to use these you need to ensure your website supports PHP and copy the source:</p>
+
+<ul>
+
+  <li><span style="font-weight: bold; font-style: italic;">Whizzypic </span>Image browser: <a href="../whizzypic.php">whizzypic.php</a> - save as a .php and upload to your website</li><li><span style="font-weight: bold; font-style: italic;">Whizzylink</span> link browser: <a href="../whizzylink.php">whizzylink.php</a> - save as a .php and upload to your website</li>
+
+
+</ul>If you want to write your own browser, it needs to return the chosen URL to whizzywig using a line of javascript like this:<br>
+
+<ul>
+
+  <li><code>window.opener.document.getElementById('lf_url').value = url;</code> (for links)</li>
+
+  <li><code>window.opener.document.getElementById('if_url').value = url;</code> (for images)</li>
+
+</ul>
+
+<br>
+
+<h2>Translating the text in whizzywig</h2>
+
+All the displayed text in whizzywig can be translated.&nbsp; Create a javascript array called '<code>language</code>' and add an element for each string you want to translate:<br>
+
+<blockquote><code>//Language for British English</code><br><code>var language = new Array();</code><br><code>language['Color']&nbsp; = "Colour";</code><br><code>language['Color name']&nbsp; = "Colour name";</code><br><code>language['Hilite']&nbsp; = "Highlight colour";</code><br></blockquote>You can place this code in an an external JavaScript file, or in a <code>script</code> tag&nbsp; in the <code>head</code> 
+
+
+section of your page.<br>
+
+Any string that are displayed by Whizzywig, but which you do not include in your <code>language </code>array, remain unchanged.<br>
+
+for more examples see <a href="../languages/espanol.js">espanol.js</a> - thanks to <span style="font-weight: bold;">Ciro Cogollo</span> for this Spanish translation.<br> or <a href="../languages/deutsch.js">deutsch.js</a> - thanks to    <span style="font-weight: bold;">Jürgen Friedrich</span> for this German translation<br>
+
+ or <a href="../languages/francais.js">francais.js</a> - thanks to    <span style="font-weight: bold;">Frédéric Meurin</span> for this French translation.<br>
+
+<br>
+
+If you'd like to contribute your own translation, please <a href="http://unverse.net/contact.html">send it</a>.<br>
+
+<br>
+
+<h2>Inserting stuff with Javascript</h2><p>There's a whizzywig function called <code>insHTML() </code>you can use to insert your own stuff.</p><p>It will insert ordinary text and/or HTML.<br></p><p><br>For example:
+
+</p><p><code>&lt;input value="add" onclick="insHTML(' Some text')" type="button"&gt;</code></p><p>or</p><p><code>&lt;input type="button" value="add" onclick="insHTML('&lt;img src=\"logo.gif\" alt=\"Our logo\"&gt;')"&gt;</code></p><p>(Be careful with embedded quotes)<br></p><p>You can also use this to add formatting:</p><p><code>&lt;input type="button" value="Text Box"</code><br><code>&nbsp;onclick="insHTML('&lt;div style=\"float:right; width:30%; border:thin solid red;\"&gt;')"&gt;</code></p>Above example will wrap <span style="color: white; background-color: navy;">selected text</span> in a red bordered div floated off to one side. <br>Note that <code>insHTML()</code> will close the tag for you.<br>
+
+<h2>Extending the toolbar</h2>
+
+<p>You can add your own buttons and pulldowns to the toolbar. See the <a href="../demos/extended.html">extended demo</a> and view the source to see how it's done. <em>New at version 51</em></p>
+
+<h2>Customizing with CSS</h2>
+
+<p><strong>Cascading Style sheets</strong> can be used to override the default style for the toolbar. For instance: <br>&nbsp;<code>#controls {background:pink !important}</code> in a style command or external stylesheet will make toolbar pink. It's important to use <code>!important</code></p><!--================================================================================-->
+</body>
+</html>
