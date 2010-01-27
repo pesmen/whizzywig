@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Multiple Whizzywigs Demo</title>
+</head>
+
+<body>
+<h1>Multiple Whizzywigs Demo</h1>
+
+<style>main{text-transform:none}</style>
+<script language="JavaScript" type="text/javascript" src="../whizzywig.js"></script>
+<script language="JavaScript" type="text/javascript">
+ cssFile = "simple.css"
+ sels = ' Textbox '; //adding custom select(s)
+ opts['textbox'] = new Array("Text box", "Right", "Left");
+ vals['textbox'] = new Array("","<div style='float:right;width:200px;border:1px solid;padding:.5em;margin:0 5px;'>&nbsp;","<div style='float:left;width:200px;border:1px solid;padding:.5em;margin:0 5px;'>&nbsp;");
+ buts = ' selectall superscript'; //adding custom button(s)
+ </script>
+<form name="Whizzy" action="http://unverse.net/whizzed.php" method="post">
+
+<h3>1.Simple, with selected buttons:</h3>
+<textarea name="summary" id="first" style="width:100%; height:50px" ><p>Tough test:</p><p>6 editors at once: this is a simple one.</textarea>
+<script language="JavaScript" type="text/javascript">makeWhizzyWig("first", "bold italic color bullet link image html");</script>
+
+<h3>2.Default:</h3>
+<textarea name="other" id="second" style="width:100%; height:150px" >
+<h1>Another whizzywig</h1>
+<img border="1" alt="Pretty Polly!" src="/2parrots.jpg" align="left" hspace=5 />
+<p>This one has a default toolbar. Double click an image to see/change its attibutes.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <img border="0" alt="Not a masterpiece" src="btn/image.gif" align="right" /></p>
+</textarea>
+<script language="JavaScript" type="text/javascript"> makeWhizzyWig("second","formatblock fontname fontsize newline bold italic underline | left center right justify | number bullet indent outdent | undo redo | color hilite rule | link image table | clean html spellcheck fullscreen");</script>
+
+<h3>3.Custom:</h3>
+<textarea name="detail" id="third" style="width:100%; height:150px" >
+<h1>Custom whizzywig</h1>
+<p>This whizzywig includes some custom controls on the toolbar</p>
+<p><img border="1" alt="Not a link" src="btn/link.gif" align="left" hspace=5 /> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <img border="0" alt="Not a masterpice" src="btn/image.gif" align="right" />Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+</textarea>
+<script language="JavaScript" type="text/javascript">
+ makeWhizzyWig("third", "bold italic color hilite superscript bullet formatblock link table image textbox selectall html clean spellcheck fontsize fontname");
+</script>
+
+<h3>4.Simple, different buttons chosen:</h3>
+<textarea name="summary2" id="fourth" style="width:100%; height:50px" ></textarea>
+<script language="JavaScript" type="text/javascript">makeWhizzyWig("fourth", "fontname bold italic number link image");</script>
+<h3>5.Custom:</h3>
+<textarea name="detail2" id="fifth" style="width:100%; height:150px" >
+</textarea>
+<script language="JavaScript" type="text/javascript">
+ makeWhizzyWig("fifth", "bold italic InsertTextArea color hilite superscript bullet formatblock link table image textbox selectall html clean");
+</script>
+
+<h3>6.Default+Custom:</h3>
+<textarea name="other2" id="sixth" style="width:100%; height:150px" >
+</textarea>
+<script language="JavaScript" type="text/javascript"> makeWhizzyWig("sixth","all");</script>
+<input type="submit" name="submit" value="Submit">
+<input type=button onclick='insHTML(" Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ")' value='More words'>
+<script language="JavaScript" type="text/javascript"></script>
+</form>
+
+</body>
+</html>

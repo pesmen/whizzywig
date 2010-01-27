@@ -1,0 +1,30 @@
+<html>
+<head>
+ <title>Text Buttons Whizzywig Demo</title>
+ <script language="JavaScript" type="text/javascript" src="../whizzywig.js"></script>
+</head>
+<body>
+
+<h1>Text Buttons Whizzywig Demo</h1>
+
+<form name="Whizzy" action="" method="post" onsubmit="syncTextarea();">
+<textarea name="edited" id="edited" rows="15" cols="70" style="width:99%; height:500px;"> 
+<H1>Text button demo</H1>
+<P>In this demo, you can see that all the buttons are text only - sometimes you want a simple interface with no graphics to download.</P>
+<P>We've also specified fewer controls on the toolbar.<BR>
+<B>NOTE: If you don't want contributors making a mess of your house style, DON'T include the Font controls!</B></P>
+<P>In this demo we chose not to use a stylesheet, but you can mix stylesheets and text buttons if you like</P>
+<P>View Source on your browser menu to see how this is set up.</P>
+<P>You can still edit this text - try it for yourself.<P>
+</textarea>
+<script language="JavaScript" type="text/javascript">
+buttonPath="textbuttons";
+makeWhizzyWig("edited", "bold italic color bullet table fontsize");
+</script>
+<input type="submit" name="submit" value="Submit" title=" Displays your page, which you can Save from the File menu. ">
+
+</form>
+
+</body>
+
+</html>

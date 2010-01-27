@@ -1,0 +1,48 @@
+<html>
+<head>
+ <title>Whizzywig editor - Extended demo</title>
+ <script language="JavaScript" type="text/javascript" src="../whizzywig.js"></script>
+</head>
+<body> <form name="Whizzy" action="" method="post" onsubmit="syncTextarea();">
+<table><tr>
+<td><textarea name="edited" id="edited" rows=35 cols=80 style="width:90%; height:85%" >
+<h1>Extend Whizzywig with your own controls</h1>
+<p>View the source of this page to see how it's done; you can add:</p>
+<ul><li>Buttons</li>
+<li>Selects</li></ul>
+<p>to the toolbar, or elsewhere on the page. The "Text box" select and the buttons "Superscript", "Selectall" and "More words" have all been added as extensions.
+</textarea>
+
+</td>
+</tr></table>
+<script language="JavaScript" type="text/javascript">
+ cssFile = "simple.css";
+//DECLARE CUSTOM SELECT(S)
+  sels = 'textbox color'; 
+
+//OPTION TEXT FOR THE NEW 'Textbox' SELECT - FIRST ONE SHOULD BE A LABEL
+  opts['textbox'] = new Array("Text box", "Right", "Left"); 
+
+//VALUES FOR THE NEW 'Textbox' SELECT - FIRST ONE SHOULD BE "" FOR THE LABEL
+//EACH VALUE IS WHAT GETS INSERTED WHEN THE OPTION IS CHANGED - DON'T INCLUDE CLOSING TAGS
+  vals['textbox'] = new Array("","<div style='float:right;width:200px;border:1px solid;padding:.5em;margin:0 5px;'>#","<div style='float:left;width:200px;border:1px solid;padding:.5em;margin:0 5px;'>#");
+//SAME THING - OPTIONS AND VALUES - FOR COLORS (if you use color names, make sure they are recognised by HTML)
+  opts['color'] = new Array("Color","Maroon","Red", "Green", "Blue", "Navy", "Purple"); 
+  vals['color'] = new Array("","<span style='color:maroon'>","<span style='color:red'>","<span style='color:green'>","<span style='color:blue'>","<span style='color:navy'>","<span style='color:purple'>");
+//DECLARE CUSTOM BUTTON(S) 
+  buts = 'selectall superscript'; 
+//WHAT THE NEW 'Superscript' BUTTON INSERTS - DON'T INCLUDE CLOSING TAGS:
+  dobut['superscript'] = '<sup>'; //adds <sup>around selected text</sup> 
+//WHAT THE NEW 'Selectall' BUTTON DOES - 'js:' MEANS EXECUTE THIS JAVASCRIPT
+ dobut['selectall'] = 'js:oW.document.execCommand("selectall",false,"");'; 
+ //NOTE THAT TOOLBAR INCLUDES OUR NEW SELECT AND BUTTONS - ADDED AT ANY POINT WE CHOOSE.
+ makeWhizzyWig("edited", "bold italic color superscript bullet logo formatblock link table image textbox selectall html clean");
+</script>
+<input type="submit" name="submit" value="Submit">
+<!-- HERE IS A BUTTON THAT IS OUTSIDE WHIZZYWIG BUT CALLS A WHIZZYWIG FUNCTION.
+     insHTML("VALUE") inserts VALUE into the edited document. 
+     NO NEED TO GIVE A CLOSING TAG SO insHTML("<small>") WILL MAKE THE SELECTED TEXT SMALL -->
+<input type=button onclick='insHTML(" Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ")' value='More words'>
+</form>
+</body>
+</html>
