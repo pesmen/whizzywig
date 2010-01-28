@@ -99,7 +99,7 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  w('<iframe style="border:1px inset ButtonShadow;width:100%;height:'+taHeight+'" src="javascript:;" id="whizzy'+idTa+'"></iframe></div>'+"\n");
  var startHTML="<html>\n<head>\n";
  if (cssFile) startHTML += '<link media="all" type="text/css" href="'+cssFile+'" rel="stylesheet">\n';
- startHTML += '</head>\n<body id="'+idTa+'" style="background-image:none">\n'+tidyD(taContent).replace(/&lt;/gi, "&amp;lt;")+'</body>\n</html>';
+ startHTML += '</head>\n<body id="'+idTa+'" style="background-image:none">\n'+tidyD(taContent)+'</body>\n</html>';
  oW=o("whizzy"+idTa).contentWindow;
  var d=oW.document;
  try{d.designMode="on";} catch(e){ setTimeout('oW.designMode="on";', 100);}
