@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Dynamically loading whizzywig editors</title>
+<script type="text/javascript" src="../whizzywig.js"></script>
+<script type="text/javascript">
+count = 0;
+
+function AddEditor () {
+  newTa = document.createElement('textarea');
+  newTa.id = "editor_"+count;
+  newTa.innerHTML = "editor_"+count;
+  newTa.name = "editor[]";
+  newTa.style.width = "600px"
+  
+  var oContainer=document.getElementById("container");
+  oContainer.appendChild(newTa); 
+  makeWhizzyWig("editor_"+count, "all");   
+  
+  count++;
+}
+</script>
+</head>
+<body>
+
+<h1>Dynamically loading whizzywig editors</h1>
+
+<form method="POST">
+
+<div id="container">
+<!--whizzywig editors load here-->
+</div>
+
+<input type="button" value="Add Editor" onclick="javascript:AddEditor();" />
+
+</form>
+
+</body>
+</html>
