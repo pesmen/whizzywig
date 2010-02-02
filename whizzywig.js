@@ -1,5 +1,5 @@
 var whizzywig_version='Whizzywig SVN';
-//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100126
+//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100201
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -35,6 +35,14 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  taWidth=o(idTa).style.width ? o(idTa).style.width : o(idTa).cols + "ex";  //grab the width and...
  taHeight=o(idTa).style.height ? o(idTa).style.height : o(idTa).rows + "em";  //...height from the textarea
  taOrigSize[idTa] = {w:taWidth,h:taHeight};
+ //Create whizzy container
+ var wContainer = document.createElement('div');
+ wContainer.id = 'CONTAINER'+idTa+'';
+ wContainer.style.width = taWidth;
+ var taObject = o(idTa);
+ o(idTa).parentNode.replaceChild(wContainer, o(idTa));
+ o("CONTAINER"+idTa).appendChild(taObject);
+ //End whizzy container
  if (o(idTa).nodeName=="TEXTAREA"){
  o(idTa).style.color='#060';
  o(idTa).style.zIndex='2';
@@ -56,7 +64,7 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  controls=controls ? controls.toLowerCase() : "all";
  if (controls == "all") controls=dsels +' newline '+ buts + dbuts + tbuts;
  else controls += tbuts;
- w('<div id="CONTAINER'+idTa+'" style="width:'+taWidth+'" onmouseover="c(\''+idTa+'\')"><div id="CONTROLS'+idTa+'" class="wzCtrl" unselectable="on">');
+ w('<div onmouseover="c(\''+idTa+'\')"><div id="CONTROLS'+idTa+'" class="wzCtrl" unselectable="on">');
  gizmos=controls.split(' ');
  for (var i=0; i < gizmos.length; i++) {
   if (gizmos[i]){ //make buttons and selects for toolbar, in order requested
@@ -96,7 +104,7 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  w('<div class="wzCtrl" id="showWYSIWYG'+idTa+'" style="display:none"><input type="button" onclick="showDesign();" value="'+t("Hide HTML")+'">');
  tagButs();
  w('</div>'+"\n");
- w('<iframe style="border:1px inset ButtonShadow;width:100%;height:'+taHeight+'" src="javascript:;" id="whizzy'+idTa+'"></iframe></div>'+"\n");
+ w('<iframe style="border:1px inset ButtonShadow;width:100%;height:'+taHeight+'" src="javascript:;" id="whizzy'+idTa+'"></iframe></div>'+"\n", true); //finally write content to whizzy container
  var startHTML="<html>\n<head>\n";
  if (cssFile) startHTML += '<link media="all" type="text/css" href="'+cssFile+'" rel="stylesheet">\n';
  startHTML += '</head>\n<body id="'+idTa+'" style="background-image:none">\n'+tidyD(taContent)+'</body>\n</html>';
@@ -107,12 +115,14 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  if (oW.addEventListener) oW.addEventListener("keypress", kb_handler, true); //keyboard shortcuts for Moz
  else {d.body.attachEvent("onpaste",function(){setTimeout('cleanUp()',10);});}
  addEvt(d,"mouseup", whereAmI); addEvt(d,"keyup", whereAmI); addEvt(d,"dblclick", doDbl);
- var taObject = o(idTa);//Insert object inside whizzy container
- o(idTa).parentNode.removeChild(o(idTa));
- o("CONTAINER"+idTa).appendChild(taObject);//End insert
+ //move textarea so html menu appears on top
+ var taObject = o(idTa);
+ o("CONTAINER"+idTa).removeChild(o(idTa));
+ o("CONTAINER"+idTa).appendChild(taObject);
+ //end move
  idTa=null;
 } //end makeWhizzyWig
-function addEvt(o,e,f){ if(wn.addEventListener) o.addEventListener(e, f, false); else o.attachEvent("on"+e,f);}
+function addEvt(o,e,f){if(wn.addEventListener) o.addEventListener(e, f, false); else o.attachEvent("on"+e,f);}
 function doDbl(){if (papa.nodeName == 'IMG') doImage(); else if (papa.nodeName == 'A') doLink();}
 function makeButton(button){  // assemble the button requested
  var butHTML, ucBut=button.substring(0,1).toUpperCase();
@@ -126,7 +136,7 @@ function makeButton(button){  // assemble the button requested
  else butHTML='<button  title="'+ucBut+'" type=button onClick=makeSo("'+button+'")>'+(btn[button]!=undefined?'<div style="width:'+btn._w+'px;height:'+btn._h+'px;background-image:url('+btn._f+');background-position:-'+btn[button]+'px 0px"></div>':'<img src="'+buttonPath+button+buttonExt+'" alt="'+ucBut+'" onError="this.parentNode.innerHTML=this.alt">')+'</button>\n';
  w(butHTML);
 }
-function fGo(id){ return '<div id="'+id+'_FORM'+idTa+'" unselectable="on" style="display:none" onkeypress="if(event.keyCode==13) {return false;}"><hr>'+"\n"; }//new form
+function fGo(id){return '<div id="'+id+'_FORM'+idTa+'" unselectable="on" style="display:none" onkeypress="if(event.keyCode==13) {return false;}"><hr>'+"\n"; }//new form
 function fNo(txt,go){ //form do it/cancel buttons
  return ' <input type="button" onclick="'+go+'" value="'+txt+'"> <input type="button" onclick="hideDialogs();" value='+t("Cancel")+"></div>\n";
 }
@@ -205,7 +215,7 @@ function vC(colour) { // view Color
  o('cPrvw'+idTa).style.backgroundColor=colour;
  o('cf_color'+idTa).value=colour;
 }
-function sC(color) {  //set Color
+function sC(color) {  //set Color 
  hideDialogs();
  var cmd=o('cf_cmd'+idTa).value;
  if  (!color) color=o('cf_color'+idTa).value;
@@ -374,8 +384,7 @@ function getDir() { //Detect current whizzywig directory
  }
  return '';
 }
-function isFullscreen() //Check if whizzywig is on fullscreen mode
-{
+function isFullscreen(){ //Check if whizzywig is on fullscreen mode
  if(o("CONTAINER"+idTa).style.width==getWinSize().w+"px") return true;
  return false;
 }
@@ -388,7 +397,7 @@ function showDesign() {
  if(o("whizzy"+idTa).contentDocument) o("whizzy"+idTa).contentDocument.designMode="on"; //FF loses it on hide
  oW.focus();
 }
-function showHTML() { 
+function showHTML() {
  o(idTa).value=tidyH(oW.document);
  h('CONTROLS'+idTa); h('whizzy'+idTa); s(idTa); s('showWYSIWYG'+idTa);
  if(isFullscreen()) {
@@ -414,7 +423,7 @@ function syncTextarea() { //tidy up before we go-go
   ret.value=tidyH(d);
  }
 }
-function cleanUp(){ xC("removeformat",null); tidyH(oW.document);}
+function cleanUp(){xC("removeformat",null); tidyH(oW.document);}
 function tidyD(h){ //FF designmode likes <B>,<I>...
  h=h.replace(/<(\/?)strong([^>]*)>/gi, "<$1B$2>").replace(/<(\/?)em>/gi, "<$1I>");
  return h;
@@ -536,9 +545,16 @@ function c(id) {//set current whizzy
   if (oW) {if(oW.focus)oW.focus();wn.status=oW.document.body.id; }
  }
 } 
-function textSel() { if (sel  && sel != "" && sel.type != "None") return true;  else {alert(t("Select some text first")); return false;}}
+function w(str, finalize) { //write to whizzy container
+ if(!w.temp) w.temp="";
+ w.temp += str;
+ if(finalize){
+  o("CONTAINER"+idTa).innerHTML += w.temp;
+  w.temp = "";
+ }
+} 
+function textSel() {if (sel  && sel != "" && sel.type != "None") return true;  else {alert(t("Select some text first")); return false;}}
 function s(id) {o(id).style.display='block';} //show element
 function h(id) {o(id).style.display='none';} //hide element
-function o(id) { return document.getElementById(id); } //get element by ID
-function w(str) { return document.write(str); } //document write
+function o(id) {return document.getElementById(id); } //get element by ID
 function t(key) {return (wn.language && language[key]) ? language[key] :  key;} //translation
