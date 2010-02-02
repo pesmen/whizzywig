@@ -1,5 +1,5 @@
 var whizzywig_version='Whizzywig SVN';
-//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100201
+//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100202
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -242,7 +242,8 @@ function doImage(){
  if (papa && papa.nodeName == 'IMG'){
   o("if_url"+idTa).value=papa.src;
   o("if_alt"+idTa).value=papa.alt;
-  o("if_side"+idTa).selectedIndex=(papa.align=="left")?1:(papa.align=="right")?2:0; 
+  var position = papa.style.cssFloat?papa.style.cssFloat:papa.style.styleFloat;
+  o("if_side"+idTa).selectedIndex=(position=="left")?1:(position=="right")?2:0; 
   o("if_border"+idTa).value=papa.style.border?papa.style.border:papa.border>0?papa.border:0;
   o("if_margin"+idTa).value=papa.style.margin?papa.style.margin:papa.hspace>0?papa.hspace:0;
  }
@@ -255,12 +256,12 @@ function insertImage(URL, side, border, margin, alt) { // insert image as specif
   if (!alt) alt=o("if_alt"+idTa).value ? o("if_alt"+idTa).value: URL.replace(/.*\/(.+)\..*/,"$1");
   img='<img alt="' + alt + '" src="' + URL +'" ';
   if (!side) side=o("if_side"+idTa).value;
-  if ((side == "left") || (side == "right")) img += 'align="' + side + '"';
+  if ((side == "left") || (side == "right")) align = 'float:' + side + ';'; else align = '';
   if (!border)  border=o("if_border"+idTa).value;
   if (border.match(/^\d+$/)) border+='px solid';
   if (!margin) margin=o("if_margin"+idTa).value;
   if (margin.match(/^\d+$/)) margin+='px';
-  if (border || margin) img += ' style="border:' + border + ';margin:' + margin + ';"';
+  if (border || margin) img += ' style="border:' + border + ';margin:' + margin + ';' + align + '"';
   img += '/>';
   insHTML(img);
  }
