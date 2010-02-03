@@ -1,5 +1,5 @@
 var whizzywig_version='Whizzywig SVN';
-//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100202
+//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100203
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -508,12 +508,12 @@ function insHTML(html) { //insert HTML at current selection
  if (html.indexOf('js:') == 0) {
   try{eval(html.replace(/^js:/,''))} catch(e){}; return;
  }
+ whereAmI();
  try {if (sel.type && sel.type!="Text") sel=""; xC("inserthtml",html+sel);}
  catch (e) {if (document.selection) {
   if (papa && papa.nodeName == 'IMG') {papa.outerHTML=html;}
   else if(rng) {rng.select(); rng.pasteHTML(html+rng.htmlText);}
  } }
- whereAmI();
 }
 function whereAmI(e){
  if (!e) var e=wn.event;
@@ -522,6 +522,7 @@ function whereAmI(e){
   sel=oW.getSelection(),sn=sel.anchorNode;
   papa=mu?e.target:(sn.nodeName == '#text')?sn.parentNode:sn;
  } else { 
+  oW.document.getElementsByTagName("body")[0].focus(); 
   sel=oW.document.selection;
   rng=sel.createRange();
   papa=mu?e.srcElement:(sel.type == "Control")?rng.item(0):rng.parentElement();
