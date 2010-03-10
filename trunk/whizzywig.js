@@ -1,5 +1,5 @@
-var whizzywig_version='Whizzywig SVN';
-//Copyright © 2005-2009 John Goodman - www.unverse.net  *date 100203
+var whizzywig_version='Whizzywig SVNr7b';
+//Copyright © 2005-2010 John Goodman - www.unverse.net  *date 100310
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -13,7 +13,7 @@ var imageBrowse; //path to page for image browser
 var linkBrowse;  //path to page for link browser
 var idTa;        //id of the textarea (param to makeWhizzyWig)
 //OTHER GLOBALS
-var oW, sel, rng, papa, trail, ppw, wn=window; //Whizzy contentWindow, current sel, range, parent, DOM path, popwindow;
+var oW, sel, rng, papa, trail, ppw, wn=window; //Whizzy contentWindow, current sel, range, parent, DOM path, popwindow, window;
 var sels='';
 var buts=''; 
 var vals=new Array();
@@ -22,6 +22,13 @@ var dobut=new Array();
 var whizzies=new Array();
 var taOrigSize=new Array();
 
+function whizzywig(controls){
+ var i,ta=document.getElementsByTagName('TEXTAREA');
+ for (i=0;i<ta.length;i++){
+  if(!ta[i].id) ta[i].id=ta.name;
+  makeWhizzyWig(ta[i].id,controls);
+ }
+}
 function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  idTa=txtArea;
  whizzies[whizzies.length]=idTa;
@@ -52,13 +59,13 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  while (frm.nodeName != 'FORM') frm=frm.parentNode;//if not form, keep trying
  addEvt(frm,"submit",syncTextarea);
  w('<style type="text/css">button {vertical-align:middle;padding:0;margin:1px 0} button img{vertical-align:middle;margin:-1px} select{vertical-align:middle;margin:1px}  .wzCtrl {background:ButtonFace; border:2px outset ButtonShadow; padding:5px;} #sourceTa{color:#060;font-family:mono;}</style>');
- var dsels='formatblock';
- if (!navigator.userAgent.match('AppleWebKit')){dsels+=' fontname fontsize'} //Font u/s on Chrome/Safari
+ var dsels='formatblock fontname fontsize';
+ //if (!navigator.userAgent.match('AppleWebKit')) {dsels+=' fontname fontsize'} //Font u/s on Chrome/Safari?
  var dbuts=' bold italic underline | left center right justify | number bullet indent outdent | undo redo | color hilite rule | link image table | clean html spellcheck fullscreen ';
  var tbuts=' tstart add_row_above add_row_below delete_row | add_column_before add_column_after delete_column | table_in_cell';
  var t_end=''; //table controls end, if needed
  btns=(dbuts+tbuts).split(' ');
- for (var i=0, pos=0; i < btns.length; i++) {
+ for (var i=0,pos=0;i<btns.length;i++) {
   if(btns[i] && btns[i]!='|' && btns[i]!='tstart') {btn[btns[i]]=btn._w*pos++};
  }
  controls=controls ? controls.toLowerCase() : "all";
@@ -81,10 +88,10 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  w(t_end) //table controls end
  w('<a href="http://www.unverse.net" style="color:buttonface" title="'+whizzywig_version+'">.</a> ');
  w(fGo('LINK'));
- if (linkBrowse) w('<input type="button" onclick=doWin("'+linkBrowse+'"); value="'+t("Browse")+'"> ');
+ if (linkBrowse) w('<input type="button" onclick=doWin("'+linkBrowse+'?rtn=lf_url'+idTa+'"); value="'+t("Browse")+'"> ');
  w(t('Link address (URL)')+': <input type="text" id="lf_url'+idTa+'" size="60"><br><input type="button" value="http://" onclick="o(\'lf_url'+idTa+'\').value=\'http://\'+o(\'lf_url'+idTa+'\').value"> <input type="button" value="mailto:" onclick="o(\'lf_url'+idTa+'\').value=\'mailto:\'+o(\'lf_url'+idTa+'\').value"><input type="checkbox" id="lf_new'+idTa+'">'+t("Open link in new window")+fNo(t("OK"),"insertLink()"));//LINK_FORM end
  w(fGo('IMAGE'));
- if (imageBrowse) w('<input type="button" onclick=doWin("'+imageBrowse+'"); value="'+t("Browse")+'"> ');
+ if (imageBrowse) w('<input type="button" onclick=doWin("'+imageBrowse+'?rtn=if_url'+idTa+'"); value="'+t("Browse")+'"> ');
  w(t('Image address (URL)')+': <input type="text" id="if_url'+idTa+'" size="50"> <label title='+t("to display if image unavailable")+'><br>'+t("Alternate text")+':<input id="if_alt'+idTa+'" type="text" size="50"></label><br>'+t("Align")+':<select id="if_side'+idTa+'"><option value="none">_&hearts;_ '+t("normal")+'</option><option value="left">&hearts;= &nbsp;'+t("left")+'</option><option value="right">=&hearts; &nbsp;'+t("right")+'</option></select> '+t("Border")+':<input type="text" id="if_border'+idTa+'" size="20" value="0" title="'+t("number or CSS e.g. 3px maroon outset")+'"> '+t("Margin")+':<input type="text" id="if_margin'+idTa+'" size="20" value="0" title="'+t("number or CSS e.g. 5px 1em")+'">'+fNo(t("Insert Image"),"insertImage()"));//IMAGE_FORM end
  w(fGo('TABLE')+t("Rows")+':<input type="text" id="tf_rows'+idTa+'" size="2" value="3"> <select id="tf_head'+idTa+'"><option value="0">'+t("No header row")+'</option><option value="1">'+t("Include header row")+'</option></select> '+t("Columns")+':<input type="text" id="tf_cols'+idTa+'" size="2" value="3"> '+t("Border width")+':<input type="text" id="tf_border'+idTa+'" size="2" value="1"> '+fNo(t("Insert Table"),"makeTable()"));//TABLE_FORM end
  w(fGo('COLOR')+'<input type="hidden" id="cf_cmd'+idTa+'"><div style="background:#000;padding:1px;height:22px;width:125px;float:left"><div id="cPrvw'+idTa+'" style="background-color:red; height:100%; width:100%"></div></div> <input type=text id="cf_color'+idTa+'" value="red" size=17 onpaste=vC(value) onblur=vC(value)> <input type="button" onmouseover=vC() onclick=sC() value="'+t("OK")+'">  <input type="button" onclick="hideDialogs();" value="'+t("Cancel")+'"><br> '+t("click below or enter a")+' <a href="http://www.unverse.net/colortable.htm" target="_blank">'+t("color name")+'</a><br clear=all> <table border=0 cellspacing=1 cellpadding=0 width=480 bgcolor="#000000">'+"\n");
@@ -442,22 +449,27 @@ function tidyH(d){ //attempt valid xhtml
  }
  ih=d.body.innerHTML;
  ih=ih.replace(/(<\/?)FONT([^>]*)/gi,"$1span$2") 
- .replace(/(<\/?)[Bb](\s+[^>]*)?>/g, "$1strong$2>")
- .replace(/(<\/?)[Ii](\s+[^>]*)?>/g, "$1em$2>")
+ .replace(/(<\/?)[B](\s+[^>]*)?>/gi, "$1strong$2>")
+ .replace(/(<\/?)[I](\s+[^>]*)?>/gi, "$1em$2>")
  .replace(/<\/?(COL|XML|ST1|SHAPE|V:|O:|F:|F |PATH|LOCK|IMAGEDATA|STROKE|FORMULAS)[^>]*>/gi, "")
  .replace(/\bCLASS="?(MSOw*|Apple-style-span)"?/gi,"")
  .replace(/<[^>]+=[^>]+>/g,qa) //quote all atts
+ .replace(/[–]/g,'-') //long –
+ .replace(/[‘’]/g, "'") //single smartquotes ‘’ 
+ .replace(/[“”]/g, '"') //double smartquotes “”
  .replace(/<(TABLE|TD|TH|COL)(.*)(WIDTH|HEIGHT)=["'0-9A-Z]*/gi, "<$1$2") //no fixed size tables (%OK) [^A-Za-z>]
- .replace(/<([^>]+)>\s*<\/\1>/gi, "") //empty tag
- .replace(/([^\n])<(P|DIV|TAB|FOR)/gi,"$1\n\n<$2") //add white space
- .replace(/>(<\/?H|P|D|T|BL|FOR|IN|SE|OP|UL|OL|LI|SC)/gi,">\n$1") //newline adjacent block level tags
+ .replace(/<([^>]+)>\s*<\/\1>/g, "") //empty tag
+ .replace(/><(H|P|D|T|BLO|FOR|IN|SE|OP|UL|OL|LI|SC)/gi,">\n<$1") //newline adjacent blocks
  .replace(/(<BR ?\/?>)([^\r\n])/gi,"$1\n$2") //newline on BR
- .replace(/\n<(LI|OP|TR|IN|DT)/gi,"\n <$1") //indent..
+ .replace(/([^\n])<(P|DIV|TAB|FOR)/gi,"$1\n\n<$2") //add white space
+ .replace(/([^\n])<\/(UL|OL|DL|DIV|TAB|FOR)/gi,"$1\n</$2") //end block
+ .replace(/([^\n])(<\/TR)/gi,"$1\n $2") //end row
+ .replace(/\n<(BLO|LI|OP|TR|IN|DT)/gi,"\n <$1") //indent..
  .replace(/\n<(TD|TH|DD)/gi,"\n  <$1") //..more
- .replace(location.href+'#','#') //IE anchor bug
+ .replace(window.location.href+'#','#') //IE anchor bug
  .replace(/<(IMG|INPUT|BR|HR|LINK|META)([^>]*)>/gi,"<$1$2 />")  //self-close tags
  .replace(/(<\/?[A-Z]*)/g,lc) //lowercase tags...
- .replace(/style="[^"]*"/gi,sa) //and style atts
+ .replace(/STYLE="[^"]*"/gi,sa); //lc style atts
  return ih; 
 }
 function kb_handler(e) { // keyboard controls for Moz
