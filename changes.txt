@@ -1,13 +1,18 @@
 WHIZZYWIG CHANGE LOG
 
-v60 - 27 January 2010
+v60 - 12 March 2010
  New Features:
  - Fullscreen mode
  - Auto detect toolbar icons directory
+ - Neater source code layout
+ - new function: whizzywig(toolbar) will turn all textareas on page into whizzywigs
+ - makeWhizzywig() can be called from anywhere: can dynamically create whizzywigs
  Bugs fixed:
+ - Font and font size now available for Safari/Chrome
  - Trying to get table editing images not found (now part of toolbar icons png)
  - &LT; in initial textarea fix
  - layout adjacent images
+ - add images without need to click edit area first
 
 v59 - 4 November 2009
 New Features:
