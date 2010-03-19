@@ -1,4 +1,4 @@
-var whizzywig_version='Whizzywig 60';
+var whizzywig_version='Whizzywig 61';
 //Copyright © 2005-2010 John Goodman - www.unverse.net  *date 100312
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -60,7 +60,6 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  addEvt(frm,"submit",syncTextarea);
  w('<style type="text/css">button {vertical-align:middle;padding:0;margin:1px 0} button img{vertical-align:middle;margin:-1px} select{vertical-align:middle;margin:1px}  .wzCtrl {background:ButtonFace; border:2px outset ButtonShadow; padding:5px;} #sourceTa{color:#060;font-family:mono;}</style>');
  var dsels='formatblock fontname fontsize';
- //if (!navigator.userAgent.match('AppleWebKit')) {dsels+=' fontname fontsize'} //Font u/s on Chrome/Safari?
  var dbuts=' bold italic underline | left center right justify | number bullet indent outdent | undo redo | color hilite rule | link image table | clean html spellcheck fullscreen ';
  var tbuts=' tstart add_row_above add_row_below delete_row | add_column_before add_column_after delete_column | table_in_cell';
  var t_end=''; //table controls end, if needed
@@ -88,10 +87,10 @@ function makeWhizzyWig(txtArea, controls){ // make a WhizzyWig from the textarea
  w(t_end) //table controls end
  w('<a href="http://www.unverse.net" style="color:buttonface" title="'+whizzywig_version+'">.</a> ');
  w(fGo('LINK'));
- if (linkBrowse) w('<input type="button" onclick=doWin("'+linkBrowse+'?rtn=lf_url'+idTa+'"); value="'+t("Browse")+'"> ');
+ if (linkBrowse) w('<input type="button" onclick=doWin("'+linkBrowse+'"); value="'+t("Browse")+'"> ');
  w(t('Link address (URL)')+': <input type="text" id="lf_url'+idTa+'" size="60"><br><input type="button" value="http://" onclick="o(\'lf_url'+idTa+'\').value=\'http://\'+o(\'lf_url'+idTa+'\').value"> <input type="button" value="mailto:" onclick="o(\'lf_url'+idTa+'\').value=\'mailto:\'+o(\'lf_url'+idTa+'\').value"><input type="checkbox" id="lf_new'+idTa+'">'+t("Open link in new window")+fNo(t("OK"),"insertLink()"));//LINK_FORM end
  w(fGo('IMAGE'));
- if (imageBrowse) w('<input type="button" onclick=doWin("'+imageBrowse+'?rtn=if_url'+idTa+'"); value="'+t("Browse")+'"> ');
+ if (imageBrowse) w('<input type="button" onclick=doWin("'+imageBrowse+'"); value="'+t("Browse")+'"> ');
  w(t('Image address (URL)')+': <input type="text" id="if_url'+idTa+'" size="50"> <label title='+t("to display if image unavailable")+'><br>'+t("Alternate text")+':<input id="if_alt'+idTa+'" type="text" size="50"></label><br>'+t("Align")+':<select id="if_side'+idTa+'"><option value="none">_&hearts;_ '+t("normal")+'</option><option value="left">&hearts;= &nbsp;'+t("left")+'</option><option value="right">=&hearts; &nbsp;'+t("right")+'</option></select> '+t("Border")+':<input type="text" id="if_border'+idTa+'" size="20" value="0" title="'+t("number or CSS e.g. 3px maroon outset")+'"> '+t("Margin")+':<input type="text" id="if_margin'+idTa+'" size="20" value="0" title="'+t("number or CSS e.g. 5px 1em")+'">'+fNo(t("Insert Image"),"insertImage()"));//IMAGE_FORM end
  w(fGo('TABLE')+t("Rows")+':<input type="text" id="tf_rows'+idTa+'" size="2" value="3"> <select id="tf_head'+idTa+'"><option value="0">'+t("No header row")+'</option><option value="1">'+t("Include header row")+'</option></select> '+t("Columns")+':<input type="text" id="tf_cols'+idTa+'" size="2" value="3"> '+t("Border width")+':<input type="text" id="tf_border'+idTa+'" size="2" value="1"> '+fNo(t("Insert Table"),"makeTable()"));//TABLE_FORM end
  w(fGo('COLOR')+'<input type="hidden" id="cf_cmd'+idTa+'"><div style="background:#000;padding:1px;height:22px;width:125px;float:left"><div id="cPrvw'+idTa+'" style="background-color:red; height:100%; width:100%"></div></div> <input type=text id="cf_color'+idTa+'" value="red" size=17 onpaste=vC(value) onblur=vC(value)> <input type="button" onmouseover=vC() onclick=sC() value="'+t("OK")+'">  <input type="button" onclick="hideDialogs();" value="'+t("Cancel")+'"><br> '+t("click below or enter a")+' <a href="http://www.unverse.net/colortable.htm" target="_blank">'+t("color name")+'</a><br clear=all> <table border=0 cellspacing=1 cellpadding=0 width=480 bgcolor="#000000">'+"\n");
