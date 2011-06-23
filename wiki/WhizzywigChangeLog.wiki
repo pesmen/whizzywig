@@ -1,5 +1,15 @@
 =WHIZZYWIG CHANGE LOG=
 
+==v62 - 23 June 2011==
+===New Features===
+ *Show the cell borders on a borderless table in edit mode 
+ * Code tidied to give smaller footprint and better safety when compressing.
+===Bugs Fixed===
+ * Clicking "Open link in new window" on Insert image deleted the selected text in some browsers (inc. Chrome)
+ * InsHTML destroyed the current selection in some browsers (inc. Chrome)
+ * Problems around linking from an image.
+
+
 ==v60 - 12 March 2010==
 ===New Features:===
   * Fullscreen mode
