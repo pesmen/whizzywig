@@ -1,4 +1,9 @@
 =WHIZZYWIG CHANGE LOG=
+==v63 - 27 June 2011==
+
+
+===Bugs Fixed===
+ * InsHTML and dependent features, including insert image, insert link, insert table did not work in Internet Explorer 9 (IE9)
 
 ==v62 - 23 June 2011==
 ===New Features===
