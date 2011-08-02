@@ -42,13 +42,15 @@ hilite rule | link image table | clean html spellcheck fullscreen"</code></p></b
 
 <p><strong>Additional parameters</strong> can optionally be specified in JavaScript. Examples:<br>
 
-<code>buttonPath = "/btn/";</code> //path to toolbar button images; "textbuttons" (the default) means don't use images<br>
+<code>whizzywig.buttonPath = "/btn/";</code> //path to toolbar button images; "textbuttons" (the default) means don't use images<br>
 
-<code>cssFile = "stylesheet.css";    </code>//url of CSS stylesheet to attach to edit area<br><code>imageBrowse = "whizzypic.php";</code> //path to page for image browser (see below) <br>
+<code>whizzywig.cssFile = "stylesheet.css";    </code>//url of CSS stylesheet to attach to edit area<br>
 
-<code>linkBrowse = "picklink.php";  </code> //path to page for link browser (see below)<br> 
+<code>whizzywig.imageBrowse = "whizzypic.php";</code> //path to page for image browser (see below) <br>
 
-<code>gentleClean = false; </code> //turns the cleanup routine vicious: deletes spans, inline styles and classes. Default is 'true'<br> </p>
+<code>whizzywig.linkBrowse = "picklink.php";  </code> //path to page for link browser (see below)<br> 
+
+</p>
 
 
 
@@ -106,7 +108,7 @@ If you'd like to contribute your own translation, please <a href="http://unverse
 
 <h2>Inserting stuff with Javascript</h2><p>There's a whizzywig function called <code>insHTML() </code>you can use to insert your own stuff.</p><p>It will insert ordinary text and/or HTML.<br></p><p><br>For example:
 
-</p><p><code>&lt;input value="add" onclick="insHTML(' Some text')" type="button"&gt;</code></p><p>or</p><p><code>&lt;input type="button" value="add" onclick="insHTML('&lt;img src=\"logo.gif\" alt=\"Our logo\"&gt;')"&gt;</code></p><p>(Be careful with embedded quotes)<br></p><p>You can also use this to add formatting:</p><p><code>&lt;input type="button" value="Text Box"</code><br><code>&nbsp;onclick="insHTML('&lt;div style=\"float:right; width:30%; border:thin solid red;\"&gt;')"&gt;</code></p>Above example will wrap <span style="color: white; background-color: navy;">selected text</span> in a red bordered div floated off to one side. <br>Note that <code>insHTML()</code> will close the tag for you.<br>
+</p><p><code>&lt;input value="add" onclick="whizzywig.insHTML(' Some text')" type="button"&gt;</code></p><p>or</p><p><code>&lt;input type="button" value="add" onclick="insHTML('&lt;img src=\"logo.gif\" alt=\"Our logo\"&gt;')"&gt;</code></p><p>(Be careful with embedded quotes)<br></p><p>You can also use this to add formatting:</p><p><code>&lt;input type="button" value="Text Box"</code><br><code>&nbsp;onclick="insHTML('&lt;div style=\"float:right; width:30%; border:thin solid red;\"&gt;')"&gt;</code></p>Above example will wrap <span style="color: white; background-color: navy;">selected text</span> in a red bordered div floated off to one side. <br>Note that <code>insHTML()</code> will close the tag for you.<br>
 
 <h2>Extending the toolbar</h2>
 
