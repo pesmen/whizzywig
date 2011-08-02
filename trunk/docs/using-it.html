@@ -17,7 +17,7 @@
 &lt;textarea id="edited" style="width:95%; height:300px"&gt; 
 &lt;/textarea&gt;
 &lt;script type="text/javascript"&gt;
-makeWhizzyWig("edited", "all");
+whizzywig.makeWhizzyWig("edited", "all");
 &lt;/script&gt;
 &lt;input type="submit" value="Submit"&gt;&lt;/form&gt;
 &lt;/body&gt;
@@ -27,11 +27,11 @@ makeWhizzyWig("edited", "all");
 <p>The above example uses the default graphic buttons - you should upload <a href="../icons.png">icons.png</a> to your root directory, or wherever you will use Whizzywig.<br>
 If you put the toolbar image anywhere but your document root, then you need to tell whizzywig where it is:</p>
 <pre>btn._f="<i>path_to_toolbar_image</i>/WhizzywigToolbar.png";
-makeWhizzywig("<i>textarea_id</i>");</pre>
+whizzywig.makeWhizzywig("<i>textarea_id</i>");</pre>
 <p>&nbsp;</p>
 
 If you want text buttons add a line
-<pre>buttonPath = "textbuttons";</pre> before makeWhizzyWig
+<pre>whizzywig.buttonPath = "textbuttons";</pre> before makeWhizzyWig
 <h2>Explanation...</h2>
 <p>In the <code>HEAD</code> section of your page you need:</p>
 <p>
@@ -44,11 +44,11 @@ attribute. <br>
 </p>
 <p>The editor area takes the size specified for the textarea it replaces. It is better to do this with inline CSS; e.g. (<code>style="width:100%; height:400px"</code>), but it will make a stab at sizing from the <code>rows</code> and <code>cols</code> attributes.  </p>
 
-<p>To start <i>Whizzywig</i> you need to issue a <code>makeWhizzyWig</code> call inside a script tag. The best place to do this is immediately following the textarea:</p>
+<p>To start <i>Whizzywig</i> you need to issue a <code>whizzywig.makeWhizzyWig</code> call inside a script tag. The best place to do this is immediately following the textarea:</p>
 
 <p><code>&lt;textarea id="<b>richtext</b>"&gt;Any preset text to be edited goes inside the textarea&lt;/textarea&gt;<br>
 &lt;script type="text/javascript"&gt;<br>
-makeWhizzyWig("<b>richtext</b>", "bold italic link image");<br>
+whizzywig.makeWhizzyWig("<b>richtext</b>", "bold italic link image");<br>
 &lt;/script&gt;</code>
 </p>
 
@@ -59,15 +59,14 @@ in the above example) is the order of buttons on toolbar. Specify
 default order</p>
 
 <p>If you want to use the default graphic buttons rather than text
-buttons, you need to put the WhizzywigToolbar image in your home
-directory:</p>
+buttons, you need to put the WhizzywigToolbar image in the same path as the whizzywig.js file:</p>
 <p style="text-align: center;"><img src="../icons.png" alt="This graphic contains all the buttons needed for the whizzywig toolbar"></p> <p>Right click the above image and "Save as" to take a copy of it.</p>
 
 <p>You can specify your own images for buttons and tell Whizzywig where to find them using the <code>buttonPath</code> variable.
 The path must be in quotes and end in a '/', e.g.
-</p><pre>buttonPath = "images/whizzywigbuttons/";</pre>
+</p><pre>whizzywig.buttonPath = "images/whizzywigbuttons/";</pre>
 Whizzywig will expect these to be .gif files (one per button): if you want another filetype set the <code>buttonExt</code> variable, e.g.
 <pre>buttonExt = ".png";</pre>
-These lines must come <b>before</b> <code>makeWhizzyWig</code>.<br>
+These lines must come <b>before</b> <code>whizzywig.makeWhizzyWig</code>.<br>
 
 </body></html>
